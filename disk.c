@@ -4,7 +4,7 @@ Make all of your changes to main.c instead.
 */
 
 #include "disk.h"
-
+#include <signal.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
