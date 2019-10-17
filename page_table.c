@@ -5,7 +5,7 @@ Make all of your changes to main.c instead.
 */
 
 #define _GNU_SOURCE
-
+#include <signal.h>
 #include <sys/types.h>
 #include <unistd.h>
 #include <sys/mman.h>
@@ -17,7 +17,7 @@ Make all of your changes to main.c instead.
 
 #include "page_table.h"
 
-struct page_table {
+ typedef struct page_table {
 	int fd;
 	char *virtmem;
 	int npages;
@@ -26,7 +26,7 @@ struct page_table {
 	int *page_mapping;
 	int *page_bits;
 	page_fault_handler_t handler;
-};
+} page_table;
 
 struct page_table *the_page_table = 0;
 
@@ -114,7 +114,7 @@ void page_table_set_entry( struct page_table *pt, int page, int frame, int bits 
 		abort();
 	}
 
-	if( frame<0 || frame>=pt->nframes ) {
+	if( frame<0 || frame>pt->nframes ) {
 		fprintf(stderr,"page_table_set_entry: illegal frame #%d\n",frame);
 		abort();
 	}
